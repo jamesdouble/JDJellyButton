@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4F9B96F01DFC1D8D00019F48 /* JDJellyMainButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F9B96EF1DFC1D8D00019F48 /* JDJellyMainButton.swift */; };
 		6B70C4B31DFA50EA00658345 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B70C4B21DFA50EA00658345 /* AppDelegate.swift */; };
 		6B70C4B51DFA50EA00658345 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B70C4B41DFA50EA00658345 /* ViewController.swift */; };
 		6B70C4B81DFA50EA00658345 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6B70C4B61DFA50EA00658345 /* Main.storyboard */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		4F9B96EF1DFC1D8D00019F48 /* JDJellyMainButton.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = JDJellyMainButton.swift; sourceTree = "<group>"; };
 		6B70C4AF1DFA50EA00658345 /* JDJellyButton.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = JDJellyButton.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6B70C4B21DFA50EA00658345 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		6B70C4B41DFA50EA00658345 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -74,6 +76,7 @@
 			children = (
 				6B70C4C51DFA512600658345 /* JDJellyButton.swift */,
 				6B70C4C71DFA55C200658345 /* JDJellyButtonView.swift */,
+				4F9B96EF1DFC1D8D00019F48 /* JDJellyMainButton.swift */,
 			);
 			name = JDJellyButton;
 			sourceTree = "<group>";
@@ -152,6 +155,7 @@
 			files = (
 				6B70C4C61DFA512600658345 /* JDJellyButton.swift in Sources */,
 				6B70C4B51DFA50EA00658345 /* ViewController.swift in Sources */,
+				4F9B96F01DFC1D8D00019F48 /* JDJellyMainButton.swift in Sources */,
 				6B70C4B31DFA50EA00658345 /* AppDelegate.swift in Sources */,
 				6B70C4C81DFA55C200658345 /* JDJellyButtonView.swift in Sources */,
 			);
@@ -313,6 +317,7 @@
 				6B70C4C31DFA50EA00658345 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

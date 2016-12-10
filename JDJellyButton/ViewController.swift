@@ -11,12 +11,14 @@ import UIKit
 class ViewController: UIViewController {
 
     var button:JDJellyButton!
+    @IBOutlet weak var exampleimg: UIImageView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         button = JDJellyButton()
         button.attachtoView(rootView: self.view)
+        button.delegate = self
     }
 
     override func didReceiveMemoryWarning() {
@@ -24,6 +26,13 @@ class ViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
 
+}
 
+extension ViewController:JellyButtonDelegate
+{
+    func JellyButtonHasBeenTap(touch:UITouch,image:UIImage)
+    {
+        self.exampleimg.image = image
+    }
 }
 

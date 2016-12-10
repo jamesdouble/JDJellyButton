@@ -20,10 +20,13 @@ class JDJellyButton
     var MainButton:JDJellyMainButton!
     var Container:UIView!
     var RootView:UIView?
+    var delegate:JellyButtonDelegate?
     //
     var buttonWidth:CGFloat = 40.0
     var buttonHeight:CGFloat = 40.0
-
+    //
+    
+    
     
     init() {
        Container = UIView(frame: CGRect(x: 50, y: 50, width: 200, height: 200))
@@ -35,6 +38,7 @@ class JDJellyButton
         let MainButtonFrame:CGRect = CGRect(x: 80, y: 80, width: buttonWidth, height: buttonHeight)
         //MainButton = JDJellyMainButton(frame: MainButtonFrame,BGColor: UIColor.red,Parent: Container)
         MainButton = JDJellyMainButton(frame: MainButtonFrame, img: UIImage(named:"vk")!, Parent: Container)
+        MainButton.rootView = rootView
         MainButton.delegate = self
         Container.addSubview(MainButton)
         rootView.addSubview(Container)
@@ -48,6 +52,7 @@ class JDJellyButton
         {
             let MainButtonFrame:CGRect = CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight)
             let jellybutton:JDJellyButtonView = JDJellyButtonView(frame: MainButtonFrame, bgimg: img)
+            jellybutton.tapdelegate = self
             jellybuttons.append(jellybutton)
         }
         let jellybuttongroup:ButtonGroups = ButtonGroups(buttongroup: jellybuttons, groupPositionDiff: nil)
@@ -85,6 +90,8 @@ class JDJellyButton
         addButtonGroup(images: images)
         let images2:[UIImage] = [UIImage(named: "dribbble")!,UIImage(named: "facebook")!,UIImage(named: "flickr")!]
         addButtonGroup(images: images2)
+        let images3:[UIImage] = [UIImage(named: "google-plus")!,UIImage(named: "instagram")!,UIImage(named: "lastfm")!,UIImage(named: "linkedin")!]
+        addButtonGroup(images: images3)
         
     }
     
@@ -105,6 +112,18 @@ extension JDJellyButton:MainButtonDelegate
     }
     
 }
+
+extension JDJellyButton:JellyButtonDelegate
+{
+     func JellyButtonHasBeenTap(touch:UITouch,image:UIImage)
+     {
+        print("Jelly")
+        delegate?.JellyButtonHasBeenTap(touch: touch,image: image)
+    }
+    
+    
+}
+ 
 
 
 
