@@ -14,6 +14,12 @@ enum ExpandType {
     case Cross
 }
 
+protocol JDJellyButtonDataSource {
+    func groupcount()->Int
+    func imagesource(forgroup groupindex:Int) -> [UIImage]
+}
+
+
 class JDJellyButton
 {
     //
@@ -21,44 +27,65 @@ class JDJellyButton
     var Container:UIView!
     var RootView:UIView?
     var delegate:JellyButtonDelegate?
+    var _datasource:JDJellyButtonDataSource?
+    var datasource:JDJellyButtonDataSource?
+    {
+        get{
+           return _datasource
+        }
+        set {
+            self._datasource = newValue
+            reloadData()
+        }
+    }
+
     //
     var buttonWidth:CGFloat = 40.0
     var buttonHeight:CGFloat = 40.0
     //
     
-    
-    
     init() {
        Container = UIView(frame: CGRect(x: 50, y: 50, width: 200, height: 200))
+    }
+    
+    func reloadData()
+    {
+        cleanButtonGroup()
+        addButtonGroup()
     }
     
     func attachtoView(rootView:UIView)
     {
         RootView = rootView
         let MainButtonFrame:CGRect = CGRect(x: 80, y: 80, width: buttonWidth, height: buttonHeight)
-        //MainButton = JDJellyMainButton(frame: MainButtonFrame,BGColor: UIColor.red,Parent: Container)
         MainButton = JDJellyMainButton(frame: MainButtonFrame, img: UIImage(named:"vk")!, Parent: Container)
         MainButton.rootView = rootView
         MainButton.delegate = self
         Container.addSubview(MainButton)
         rootView.addSubview(Container)
-        addExampleGroup()
+
     }
     
-    func addButtonGroup(images:[UIImage])
+    func addButtonGroup()
     {
-        var jellybuttons:[JDJellyButtonView] = [JDJellyButtonView]()
-        for img in images
+        let groupcount:Int = (_datasource?.groupcount())!
+        for i in 0..<groupcount
         {
-            let MainButtonFrame:CGRect = CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight)
-            let jellybutton:JDJellyButtonView = JDJellyButtonView(frame: MainButtonFrame, bgimg: img)
-            jellybutton.tapdelegate = self
-            jellybuttons.append(jellybutton)
+            var jellybuttons:[JDJellyButtonView] = [JDJellyButtonView]()
+            let imgarr:[UIImage] = (_datasource?.imagesource(forgroup: i))!
+            print("arrcount\(imgarr.count)")
+            for img in imgarr
+            {
+                let MainButtonFrame:CGRect = CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight)
+                let jellybutton:JDJellyButtonView = JDJellyButtonView(frame: MainButtonFrame, bgimg: img)
+                jellybutton.tapdelegate = self
+                jellybuttons.append(jellybutton)
+            }
+            let jellybuttongroup:ButtonGroups = ButtonGroups(buttongroup: jellybuttons, groupPositionDiff: nil)
+            MainButton.appendButtonGroup(bgs: jellybuttongroup)
         }
-        let jellybuttongroup:ButtonGroups = ButtonGroups(buttongroup: jellybuttons, groupPositionDiff: nil)
-        MainButton.appendButtonGroup(bgs: jellybuttongroup)
     }
-    
+    /*
     func addButtonGroup(colors:[UIColor])
     {
         var jellybuttons:[JDJellyButtonView] = [JDJellyButtonView]()
@@ -71,28 +98,11 @@ class JDJellyButton
         let jellybuttongroup:ButtonGroups = ButtonGroups(buttongroup: jellybuttons, groupPositionDiff: nil)
         MainButton.appendButtonGroup(bgs: jellybuttongroup)
     }
-    
+    */
     func cleanButtonGroup()
     {
         MainButton.closingButtonGroup()
         MainButton.cleanButtonGroup()
-    }
-    
-    func addExampleGroup()
-    {
-        /*
-        let colors:[UIColor] = [UIColor.black,UIColor.red]
-        addButtonGroup(colors: colors)
-        let colors2:[UIColor] = [UIColor.yellow]
-        addButtonGroup(colors: colors2)
-         */
-        let images:[UIImage] = [UIImage(named: "badoo")!,UIImage(named: "behance")!,UIImage(named: "deviantart")!]
-        addButtonGroup(images: images)
-        let images2:[UIImage] = [UIImage(named: "dribbble")!,UIImage(named: "facebook")!,UIImage(named: "flickr")!]
-        addButtonGroup(images: images2)
-        let images3:[UIImage] = [UIImage(named: "google-plus")!,UIImage(named: "instagram")!,UIImage(named: "lastfm")!,UIImage(named: "linkedin")!]
-        addButtonGroup(images: images3)
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
@@ -115,12 +125,10 @@ extension JDJellyButton:MainButtonDelegate
 
 extension JDJellyButton:JellyButtonDelegate
 {
-     func JellyButtonHasBeenTap(touch:UITouch,image:UIImage)
-     {
-        print("Jelly")
-        delegate?.JellyButtonHasBeenTap(touch: touch,image: image)
+    func JellyButtonHasBeenTap(touch:UITouch,image:UIImage,groupindex:Int,arrindex:Int)
+    {
+        delegate?.JellyButtonHasBeenTap(touch: touch, image: image, groupindex: groupindex, arrindex: arrindex)
     }
-    
     
 }
  

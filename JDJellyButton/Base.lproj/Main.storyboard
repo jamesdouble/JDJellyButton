@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="11524"/>
+        <capability name="Constraints with non-1.0 multipliers" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -22,14 +23,36 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gBv-Kl-kQ9">
-                                <rect key="frame" x="137" y="47" width="100" height="101"/>
+                                <rect key="frame" x="137" y="20" width="100" height="101"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMinX="YES" widthSizable="YES" flexibleMaxX="YES" flexibleMinY="YES" heightSizable="YES" flexibleMaxY="YES"/>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="B6p-EL-dUZ">
+                                <rect key="frame" x="187.5" y="138" width="187.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="5gr-QM-ttx">
+                                <rect key="frame" x="0.0" y="138" width="187.5" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="leading" secondItem="5gr-QM-ttx" secondAttribute="leading" id="9z8-6m-5Or"/>
+                            <constraint firstItem="B6p-EL-dUZ" firstAttribute="width" secondItem="5gr-QM-ttx" secondAttribute="width" id="FB7-tG-oLC"/>
+                            <constraint firstItem="B6p-EL-dUZ" firstAttribute="centerY" secondItem="5gr-QM-ttx" secondAttribute="centerY" id="P2M-g1-n7L"/>
+                            <constraint firstItem="5gr-QM-ttx" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" multiplier="0.5" id="qtC-Py-UeQ"/>
+                            <constraint firstItem="B6p-EL-dUZ" firstAttribute="leading" secondItem="5gr-QM-ttx" secondAttribute="trailing" id="t1c-aU-3oa"/>
+                            <constraint firstItem="5gr-QM-ttx" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="118" id="u3b-aV-3eq"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="exampleimg" destination="gBv-Kl-kQ9" id="hUa-gw-Tht"/>
+                        <outlet property="label1" destination="5gr-QM-ttx" id="pbc-gD-RqG"/>
+                        <outlet property="label2" destination="B6p-EL-dUZ" id="Gal-Ls-0v2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

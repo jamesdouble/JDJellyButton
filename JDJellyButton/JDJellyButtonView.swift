@@ -9,11 +9,11 @@
 import UIKit
 
  protocol JellyButtonDelegate {
-    func JellyButtonHasBeenTap(touch:UITouch,image:UIImage)
+    func JellyButtonHasBeenTap(touch:UITouch,image:UIImage,groupindex:Int,arrindex:Int)
 }
 
 extension JellyButtonDelegate{
-    func JellyButtonHasBeenTap(touch:UITouch,image:UIImage)
+    func JellyButtonHasBeenTap(touch:UITouch,image:UIImage,groupindex:Int,arrindex:Int)
       {
         
       }
@@ -24,6 +24,7 @@ extension JellyButtonDelegate{
 class JDJellyButtonView:UIView
 {
     var tapdelegate:JellyButtonDelegate?
+    var dependingMainButton:JDJellyMainButton?
     var imgView:UIImageView?
     
     override init(frame: CGRect) {
@@ -53,7 +54,10 @@ class JDJellyButtonView:UIView
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?)
     {
        let image = self.imgView?.image
-       tapdelegate?.JellyButtonHasBeenTap(touch: touches.first!,image: image!)
+       let groupindex = dependingMainButton?.getGroupIndex()
+       let arrindex = dependingMainButton?.getJellyButtonIndex(jelly: self)
+       print("\(groupindex),\(arrindex)")
+       tapdelegate?.JellyButtonHasBeenTap(touch: touches.first!,image: image!,groupindex: groupindex!,arrindex: arrindex!)
     }
     
     

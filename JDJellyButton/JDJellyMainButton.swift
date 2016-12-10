@@ -13,9 +13,11 @@ struct ButtonGroups {
     var groupPositionDiff:[CGPoint]?
 }
 
- protocol MainButtonDelegate {
+protocol MainButtonDelegate {
      func MainButtonHasBeenTap(touch:UITouch)
 }
+
+
 
 class JDJellyMainButton:JDJellyButtonView
 {
@@ -49,9 +51,34 @@ class JDJellyMainButton:JDJellyButtonView
         buttongroups = [ButtonGroups]()
     }
     
+    func getGroupIndex() -> Int
+    {
+        return GroupIndex
+    }
+    
+    func getJellyButtonIndex(jelly:JDJellyButtonView) -> Int
+    {
+        var index = 0
+        let nowgroup:ButtonGroups = buttongroups[GroupIndex]
+        let buttongroup = nowgroup.buttongroup
+        for jellybutton in buttongroup!
+        {
+                if(jellybutton.imgView == jelly.imgView)
+                {
+                    return index
+                }
+            index += 1
+        }
+        return index
+    }
+    
     func appendButtonGroup(bgs:ButtonGroups)
     {
         var temp_bgs:ButtonGroups = bgs
+        for jelly in temp_bgs.buttongroup
+        {
+            jelly.dependingMainButton = self
+        }
         temp_bgs.groupPositionDiff = [CGPoint]()
         let x:[CGFloat] = [-(0.5 * self.frame.width + radius),0 ,0.5 * self.frame.width + radius,0]
         let y:[CGFloat] = [0,-(0.5 * self.frame.width + radius),0 ,0.5 * self.frame.width + radius]
