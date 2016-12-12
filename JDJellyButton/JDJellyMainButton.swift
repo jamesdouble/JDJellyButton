@@ -8,6 +8,14 @@
 
 import UIKit
 
+enum JellyButtonExpandType
+{
+    case Cross
+    case LeftLine
+    case RightLine
+    case UpperLine
+}
+
 struct ButtonGroups {
     var buttongroup:[JDJellyButtonView]!
     var groupPositionDiff:[CGPoint]?
@@ -22,6 +30,7 @@ protocol MainButtonDelegate {
 class JDJellyMainButton:JDJellyButtonView
 {
     var rootView:UIView?
+    var ExpandType:JellyButtonExpandType = .Cross
     var ContainerView:UIView?
     var buttongroups:[ButtonGroups] = [ButtonGroups]()
     var Expanding:Bool = false
@@ -31,20 +40,34 @@ class JDJellyMainButton:JDJellyButtonView
     var LastPoint:CGPoint?
     var LastTime:TimeInterval?
     var radius:CGFloat = 30.0
+    var halfWidth:CGFloat = 0.0
     var GroupIndex:Int = 0
+    var x:[CGFloat] = [CGFloat]()
+    var y:[CGFloat] = [CGFloat]()
     
     var delegate:MainButtonDelegate?
     
     init(frame: CGRect,BGColor:UIColor,Parent:UIView)  {
         super.init(frame:frame,BGColor:BGColor)
         self.ContainerView = Parent
+        halfWidth = self.frame.width * 0.5
+        caculateJellyPosition()
     }
     
     init(frame: CGRect,img:UIImage,Parent:UIView)  {
         super.init(frame: frame, bgimg: img)
         self.ContainerView = Parent
+         halfWidth = self.frame.width * 0.5
+        caculateJellyPosition()
     }
     
+    func setExpandType(type:JellyButtonExpandType)
+    {
+        self.ExpandType = type
+        caculateJellyPosition()
+        updateJellyPosition()
+        self.closingButtonGroup(expandagain: true)
+    }
     
     func cleanButtonGroup()
     {
@@ -72,6 +95,38 @@ class JDJellyMainButton:JDJellyButtonView
         return index
     }
     
+    func caculateJellyPosition()
+    {
+        x = [CGFloat]()
+        y = [CGFloat]()
+        if(ExpandType == .Cross)
+        {
+        x = [-(halfWidth + radius),0 ,0.5 * halfWidth + radius,0]
+        y = [0,-(halfWidth + radius),0 ,halfWidth + radius]
+        }
+        else if(ExpandType == .LeftLine)
+        {
+            for i in 1..<8
+            {
+                x.append(-(halfWidth + radius) * CGFloat(i))
+                y.append(0.0)
+            }
+        }
+    }
+    
+    func updateJellyPosition()
+    {
+        for k in 0..<buttongroups
+        {
+            for i in 0..<buttongroups.count
+            {
+            bg.groupPositionDiff? = [CGPoint]()
+            bg.groupPositionDiff?.append(CGPoint(x: x[i] , y: y[i]))
+            }
+        }
+
+    }
+    
     func appendButtonGroup(bgs:ButtonGroups)
     {
         var temp_bgs:ButtonGroups = bgs
@@ -80,8 +135,7 @@ class JDJellyMainButton:JDJellyButtonView
             jelly.dependingMainButton = self
         }
         temp_bgs.groupPositionDiff = [CGPoint]()
-        let x:[CGFloat] = [-(0.5 * self.frame.width + radius),0 ,0.5 * self.frame.width + radius,0]
-        let y:[CGFloat] = [0,-(0.5 * self.frame.width + radius),0 ,0.5 * self.frame.width + radius]
+        
         for i in 0..<bgs.buttongroup.count
         {
             let cgpoint:CGPoint = CGPoint(x: x[i] , y: y[i])
@@ -142,7 +196,7 @@ class JDJellyMainButton:JDJellyButtonView
         }
     }
     
-    func closingButtonGroup()
+    func closingButtonGroup(expandagain:Bool)
     {
         if(GroupIndex < buttongroups.count)
         {
@@ -164,6 +218,10 @@ class JDJellyMainButton:JDJellyButtonView
                         self.animating = false
                         self.Expanding = false
                         jellybutton.removeFromSuperview()
+                        if(expandagain)
+                        {
+                        self.expandButtonGroup()
+                        }
                     })
                     
                     index += 1
@@ -196,7 +254,7 @@ extension JDJellyMainButton
         if(Expanding)
         {
             expandignMove = true
-            closingButtonGroup()
+            closingButtonGroup(expandagain: false)
         }
         
         LastTime = touches.first!.timestamp
@@ -234,7 +292,7 @@ extension JDJellyMainButton
             }
             else
             {
-                closingButtonGroup()
+                closingButtonGroup(expandagain: false)
             }
             
         }

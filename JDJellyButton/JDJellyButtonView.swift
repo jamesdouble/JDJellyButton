@@ -2,7 +2,7 @@
 //  JDJellyButtonView.swift
 //  JDJellyButton
 //
-//  Created by waninuser on 2016/12/9.
+//  Created by JamesDouble on 2016/12/9.
 //  Copyright © 2016年 jamesdouble. All rights reserved.
 //
 

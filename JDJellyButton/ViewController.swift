@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  JDJellyButton
 //
-//  Created by waninuser on 2016/12/9.
+//  Created by JamesDouble on 2016/12/9.
 //  Copyright © 2016年 jamesdouble. All rights reserved.
 //
 
@@ -28,9 +28,10 @@ class ViewController: UIViewController {
         
         
         button = JDJellyButton()
-        button.attachtoView(rootView: self.view)
+        button.attachtoView(rootView: self.view,mainbutton: UIImage(named:"vk")!)
         button.delegate = self
         button.datasource = self
+        button.setJellyType(type: .LeftLine)
     }
 
     override func didReceiveMemoryWarning() {

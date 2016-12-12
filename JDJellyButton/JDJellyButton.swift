@@ -2,7 +2,7 @@
 //  JDJellyButton.swift
 //  JDJellyButton
 //
-//  Created by waninuser on 2016/12/9.
+//  Created by JamesDouble on 2016/12/9.
 //  Copyright © 2016年 jamesdouble. All rights reserved.
 //
 
@@ -54,11 +54,11 @@ class JDJellyButton
         addButtonGroup()
     }
     
-    func attachtoView(rootView:UIView)
+    func attachtoView(rootView:UIView,mainbutton image:UIImage)
     {
         RootView = rootView
         let MainButtonFrame:CGRect = CGRect(x: 80, y: 80, width: buttonWidth, height: buttonHeight)
-        MainButton = JDJellyMainButton(frame: MainButtonFrame, img: UIImage(named:"vk")!, Parent: Container)
+        MainButton = JDJellyMainButton(frame: MainButtonFrame, img: image, Parent: Container)
         MainButton.rootView = rootView
         MainButton.delegate = self
         Container.addSubview(MainButton)
@@ -101,8 +101,13 @@ class JDJellyButton
     */
     func cleanButtonGroup()
     {
-        MainButton.closingButtonGroup()
+        MainButton.closingButtonGroup(expandagain: false)
         MainButton.cleanButtonGroup()
+    }
+    
+    func setJellyType(type:JellyButtonExpandType)
+    {
+        MainButton.setExpandType(type: type)
     }
     
     required init?(coder aDecoder: NSCoder) {
