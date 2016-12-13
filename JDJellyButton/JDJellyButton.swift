@@ -84,7 +84,7 @@ class JDJellyButton
     func attachtoView(rootView:UIView,mainbutton image:UIImage)
     {
         RootView = rootView
-        let MainButtonFrame:CGRect = CGRect(x: 200, y: 200, width: buttonWidth, height: buttonHeight)
+        let MainButtonFrame:CGRect = CGRect(x: 200 - 0.5 * buttonHeight, y: 200 - 0.5 * buttonHeight, width: buttonWidth, height: buttonHeight)
         MainButton = JDJellyMainButton(frame: MainButtonFrame, img: image, Parent: Container)
         MainButton.rootView = rootView
         MainButton.delegate = self
