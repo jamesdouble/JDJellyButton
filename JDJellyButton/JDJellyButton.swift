@@ -19,12 +19,38 @@ protocol JDJellyButtonDataSource {
     func imagesource(forgroup groupindex:Int) -> [UIImage]
 }
 
+class JelllyContainer:UIView
+{
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+    }
+    /*
+     let the background totally transparent
+     */
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        for subview in subviews {
+            if !subview.isHidden && subview.alpha > 0 && subview.isUserInteractionEnabled && subview.point(inside: convert(point, to: subview), with: event) {
+                return true
+            }
+        }
+        return false
+    }
+    
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    
+}
+
 
 class JDJellyButton
 {
     //
     var MainButton:JDJellyMainButton!
-    var Container:UIView!
+    var Container:JelllyContainer!
     var RootView:UIView?
     var delegate:JellyButtonDelegate?
     var _datasource:JDJellyButtonDataSource?
@@ -46,7 +72,7 @@ class JDJellyButton
     //
     
     init() {
-       Container = UIView(frame: CGRect(x: 50, y: 50, width: 200, height: 200))
+       Container = JelllyContainer(frame: CGRect(x: 50, y: 50, width: 400, height: 400))
     }
     
     func reloadData()
@@ -58,7 +84,7 @@ class JDJellyButton
     func attachtoView(rootView:UIView,mainbutton image:UIImage)
     {
         RootView = rootView
-        let MainButtonFrame:CGRect = CGRect(x: 80, y: 80, width: buttonWidth, height: buttonHeight)
+        let MainButtonFrame:CGRect = CGRect(x: 200, y: 200, width: buttonWidth, height: buttonHeight)
         MainButton = JDJellyMainButton(frame: MainButtonFrame, img: image, Parent: Container)
         MainButton.rootView = rootView
         MainButton.delegate = self
@@ -86,20 +112,7 @@ class JDJellyButton
             MainButton.appendButtonGroup(bgs: jellybuttongroup)
         }
     }
-    /*
-    func addButtonGroup(colors:[UIColor])
-    {
-        var jellybuttons:[JDJellyButtonView] = [JDJellyButtonView]()
-        for color in colors
-        {
-            let MainButtonFrame:CGRect = CGRect(x: 0, y: 0, width: buttonWidth, height: buttonHeight)
-            let jellybutton:JDJellyButtonView = JDJellyButtonView(frame: MainButtonFrame, BGColor: color)
-            jellybuttons.append(jellybutton)
-        }
-        let jellybuttongroup:ButtonGroups = ButtonGroups(buttongroup: jellybuttons, groupPositionDiff: nil)
-        MainButton.appendButtonGroup(bgs: jellybuttongroup)
-    }
-    */
+    
     func cleanButtonGroup()
     {
         MainButton.closingButtonGroup(expandagain: false)
