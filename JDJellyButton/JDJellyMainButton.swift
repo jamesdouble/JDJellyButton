@@ -101,7 +101,7 @@ class JDJellyMainButton:JDJellyButtonView
         y = [CGFloat]()
         if(ExpandType == .Cross)
         {
-        x = [-(halfWidth + radius),0 ,0.5 * halfWidth + radius,0]
+        x = [-(halfWidth + radius),0 ,halfWidth + radius,0]
         y = [0,-(halfWidth + radius),0 ,halfWidth + radius]
         }
         else if(ExpandType == .LeftLine)
@@ -112,17 +112,37 @@ class JDJellyMainButton:JDJellyButtonView
                 y.append(0.0)
             }
         }
+        else if(ExpandType == .RightLine)
+        {
+            for i in 1..<8
+            {
+                x.append((halfWidth + radius) * CGFloat(i))
+                y.append(0.0)
+            }
+        }
+        else if(ExpandType == .UpperLine)
+        {
+            for i in 1..<8
+            {
+                y.append(-(halfWidth + radius) * CGFloat(i))
+                x.append(0.0)
+            }
+        }
     }
     
     func updateJellyPosition()
     {
-        for k in 0..<buttongroups
+        var index:Int = 0
+        for bg in buttongroups
         {
-            for i in 0..<buttongroups.count
+            var temp_bgs:ButtonGroups = bg
+            temp_bgs.groupPositionDiff?.removeAll()
+            for i in 0..<bg.buttongroup.count
             {
-            bg.groupPositionDiff? = [CGPoint]()
-            bg.groupPositionDiff?.append(CGPoint(x: x[i] , y: y[i]))
+            temp_bgs.groupPositionDiff?.append(CGPoint(x: x[i], y: y[i]))
             }
+            buttongroups[index] = temp_bgs
+            index += 1
         }
 
     }

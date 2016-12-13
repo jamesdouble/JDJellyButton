@@ -14,10 +14,15 @@ class ViewController: UIViewController {
     @IBOutlet weak var exampleimg: UIImageView!
     @IBOutlet weak var label1: UILabel!
     @IBOutlet weak var label2: UILabel!
+    @IBOutlet weak var picker: UIPickerView!
+    
     let images:[UIImage] = [UIImage(named: "badoo")!,UIImage(named: "behance")!,UIImage(named: "deviantart")!]
     let images2:[UIImage] = [UIImage(named: "dribbble")!,UIImage(named: "facebook")!,UIImage(named: "flickr")!]
     let images3:[UIImage] = [UIImage(named: "google-plus")!,UIImage(named: "instagram")!,UIImage(named: "lastfm")!,UIImage(named: "linkedin")!]
     var imagearr:[[UIImage]] = [[UIImage]]()
+    
+    let titlestr:[String] = ["Cross","Left","Right","Upper"]
+    let typerow:[JellyButtonExpandType] =   [.Cross,.LeftLine,.RightLine,.UpperLine]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,12 +31,15 @@ class ViewController: UIViewController {
         imagearr.append(images2)
         imagearr.append(images3)
         
+        picker.delegate = self
+        picker.dataSource = self
+        
         
         button = JDJellyButton()
         button.attachtoView(rootView: self.view,mainbutton: UIImage(named:"vk")!)
         button.delegate = self
         button.datasource = self
-        button.setJellyType(type: .LeftLine)
+        button.setJellyType(type: .Cross)
     }
 
     override func didReceiveMemoryWarning() {
@@ -63,4 +71,32 @@ extension ViewController:JDJellyButtonDataSource
     return imagearr[groupindex]
     }
 }
+
+extension ViewController:UIPickerViewDataSource
+{
+    func numberOfComponents(in pickerView: UIPickerView) -> Int
+    {
+        return 1
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int
+    {
+        return titlestr.count
+    }
+}
+
+extension ViewController:UIPickerViewDelegate
+{
+    func pickerView(_ pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString?
+    {
+        let strings:NSAttributedString = NSAttributedString(string: titlestr[row], attributes: [NSForegroundColorAttributeName:UIColor.white])
+        return strings
+    }
+    
+    func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
+    {
+        button.setJellyType(type: typerow[row])
+    }
+}
+
 

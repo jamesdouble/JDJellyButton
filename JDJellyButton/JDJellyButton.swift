@@ -28,6 +28,7 @@ class JDJellyButton
     var RootView:UIView?
     var delegate:JellyButtonDelegate?
     var _datasource:JDJellyButtonDataSource?
+ 
     var datasource:JDJellyButtonDataSource?
     {
         get{
