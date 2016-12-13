@@ -53,6 +53,21 @@ extension ViewController:JDJellyButtonDataSource
     }
 }
 ```
+###Change Expanding Type
+There're some button expanding type you can choose.
+```Swift
+/*
+enum JellyButtonExpandType
+{
+    case Cross
+    case LeftLine
+    case RightLine
+    case UpperLine
+}
+*/
+button.setJellyType(type: .Cross)
+```
+![Alt text](/../master/Readme_img/change_type.gif?raw=true "")
 
 ###Delegate(Optional))
 If you want to get notification when user tap one of buttons, you can implement JellyButtonDelegate 
